@@ -19,7 +19,7 @@ main {
 #chatbox {
 	display: flex;
 	flex-direction: column;
-    height: 100%;
+	height: 100%;
 }
 
 #chatbox > #messages {
@@ -60,8 +60,8 @@ main {
 
 #chatbox > #send-message > button {
 	background-color: hsl(0, 0%, 12%);
-    cursor: pointer;
-    border: 0;
+	cursor: pointer;
+	border: 0;
 }
 
 #chatbox > #send-message > button:hover {
