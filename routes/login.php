@@ -16,11 +16,11 @@ if ($data) {
 		$success = $db->getPassword->execute([
 			'username' => $data['username'],
 		]);
-
 		if (!$success) {
 			Error('Incorrect credentials!');
 		} else {
-			$password = $db->getPassword->fetch(PDO::FETCH_ASSOC)['password'];
+			$row = $db->getPassword->fetch(PDO::FETCH_ASSOC);
+			$password = $row ? $row['password'] : '';
 			
 			if (password_verify($data['password'], $password)) {
 				$_SESSION['username'] = $data['username'];

@@ -16,7 +16,8 @@ include_once('../Database.php');
 
 $db = DB::get();
 
-$last_update_time = filter_var_array($_SESSION, [
+//direct access to a non exisiting element results in a warning
+$last_update_time = filter_var_array($_SESSION, [ 
 	'last_update_time' => [],
 ])['last_update_time'];
 

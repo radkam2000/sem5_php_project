@@ -276,7 +276,7 @@ main {
 			const createMessage = () => {
 				const messageElement = document.createElement('chat-message');
 				messageElement.append(
-					h('span', 'timestamp', message.time.slice(0, message.time.length - 4)),
+					h('span', 'timestamp', message.time.slice(0, -4)),
 					h('span', 'username', message.username),
 					h('span', 'content', message.message),
 				);
