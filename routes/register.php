@@ -1,7 +1,9 @@
 <?php
 
 if (isset($_SESSION['username'])) {
-	Error('You are already logged in.');
+	Error('You are already logged in. You will be redirected in a few seconds');
+	http_response_code(307); // Temporary Redirect (Already logged in)
+	header ('refresh: 5;URL='.$root.'/chat');
 } else {
 
 $data = filter_input_array(INPUT_POST, [
@@ -30,9 +32,10 @@ if ($data) {
 				Error('This account already exists.');
 			} else {
 				$_SESSION['username'] = $data['username'];
-		
+				Success("Your account was succesfully created. You will be redirected in a few seconds");
 				http_response_code(307); // Temporary Redirect (Logged In)
-		        header('location: '.$root.'/chat');
+				header ('refresh: 5;URL='.$root.'/chat');
+				header('location: '.$root.'/chat');
 			}
 		} catch (Exception $e) { // Database Error
 			if($e->getCode()==='23000'){
