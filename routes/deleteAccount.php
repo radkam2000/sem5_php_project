@@ -9,38 +9,45 @@ if (!isset($_SESSION['username'])){
 <?php
 
 
-$data = filter_input(INPUT_POST, 'password');
+$data = filter_input_array(INPUT_POST, [
+	'password' => [],
+	'password2' => [],
+]);
 
 if ($data) {
-    try {
-        $success = $db->getPassword->execute([
-            'username' => $_SESSION['username'],
-        ]);
+    if ($data['password'] !== $data['password2']) {
+		Error('Passwords are not the same.');
+    } else {
+        try {
+            $success = $db->getPassword->execute([
+                'username' => $_SESSION['username'],
+            ]);
 
-        if (!$success) {
-            Error('Incorrect password!');
-        } else {
-            $password = $db->getPassword->fetch(PDO::FETCH_ASSOC)['password'];
-            
-            if (password_verify($data, $password)) {
-                $db->deleteAccount->execute(['username' => $_SESSION['username']]);
-                $db->chatDeleteAccount->execute(['username' => $_SESSION['username']]);
-                $_SESSION = [];
-                // $_SESSION['username'] = $data['username'];
-                // http_response_code(307); // Temporary Redirect (Account deleted)
-                // header('location: '.$root.'/');    
-            } else {
+            if (!$success) {
                 Error('Incorrect password!');
+            } else {
+                $password = $db->getPassword->fetch(PDO::FETCH_ASSOC)['password'];
+                
+                if (password_verify($data['password'], $password)) {
+                    $db->deleteAccount->execute(['username' => $_SESSION['username']]);
+                    $db->chatDeleteAccount->execute(['username' => $_SESSION['username']]);
+                    $_SESSION = [];
+                    // $_SESSION['username'] = $data['username'];
+                    // http_response_code(307); // Temporary Redirect (Account deleted)
+                    // header('location: '.$root.'/');    
+                } else {
+                    Error('Incorrect password!');
+                }
             }
+        } catch (Exception $e) { // Database Error
+            Error($e->getMessage());
+        } finally{
+            $_SESSION = [];
+            // $_SESSION['username'] = $data['username'];
+            Success("Your account was succesfully deleted, you will be redirected in a few seconds.");
+            http_response_code(307); // Temporary Redirect (Account deleted)
+            header ('refresh: 5;URL='.$root.'/');
         }
-    } catch (Exception $e) { // Database Error
-        Error($e->getMessage());
-    } finally{
-        $_SESSION = [];
-        // $_SESSION['username'] = $data['username'];
-        Success("Your account was succesfully deleted, you will be redirected in a few seconds.");
-        http_response_code(307); // Temporary Redirect (Account deleted)
-        header ('refresh: 5;URL='.$root.'/');
     }
 }
 
@@ -92,5 +99,7 @@ form.deleteAccount button:hover {
 <form class="deleteAccount" method="POST">
 	<p>Password</p>
     <input type="password" name="password" placeholder="Password" required />
+    <p>Repeat Password</p>
+    <input type="password" name="password2" placeholder="Password" required />
     <button>Confirm</button>
 </form>
