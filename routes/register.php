@@ -38,7 +38,6 @@ if ($data) {
 			}
 		} catch (Exception $e) { // Database Error
 			if($e->getCode()==='23000'){
-					var_dump($e);
 				Error("This account already exists.");
 			} else {
 					Error($e->getMessage());
