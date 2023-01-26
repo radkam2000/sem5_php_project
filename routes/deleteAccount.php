@@ -29,23 +29,17 @@ if ($data) {
 					$db->deleteAccount->execute(['username' => $_SESSION['username']]);
 					$db->chatDeleteAccount->execute(['username' => $_SESSION['username']]);
 					$_SESSION = [];
-					// $_SESSION['username'] = $data['username'];
-					// http_response_code(307); // Temporary Redirect (Account deleted)
-					// header('location: '.$root.'/');	
+                    Success("Your account was succesfully deleted.");
+                    http_response_code(307); // Temporary Redirect (Account deleted)
+                    header ('location: '.$root.'/?delete=1');
 				} else {
 					Error('Incorrect password!');
 				}
 			}
 		} catch (Exception $e) { // Database Error
 			Error($e->getMessage());
-		} finally{
-			$_SESSION = [];
-			// $_SESSION['username'] = $data['username'];
-			Success("Your account was succesfully deleted.");
-			http_response_code(307); // Temporary Redirect (Account deleted)
-			header ('location: '.$root.'/?delete=1');
-		}
-	}
+		}	
+    }
 }
 
 $site['style'][] = '

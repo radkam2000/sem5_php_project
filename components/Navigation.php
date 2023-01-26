@@ -9,12 +9,7 @@ $active = function($path) {
 	return $route == $path ? 'data-active' : '';
 };
 
-$paths = [
-	// '/' => 'Home',
-	// '/register' => 'Register',
-	// '/login'	=> 'Log in',
-	// '/chat'	 => 'Chat',
-];
+$paths = [];
 
 $loggedInPaths = [
 	'/chat'	 => 'Chat',
