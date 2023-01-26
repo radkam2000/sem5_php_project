@@ -1,0 +1,4 @@
+RewriteEngine on
+RewriteCond %{REQUEST_FILENAME} !/public/
+RewriteCond %{REQUEST_FILENAME} !/api/
+RewriteRule ^.*$ index.php [L,QSA]
