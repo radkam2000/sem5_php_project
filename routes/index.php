@@ -2,12 +2,12 @@
 <?php
 $site['style'][] = '
 .home {
-    margin-top: 5em;
-    display: flex;
-    flex-direction: column;
+	margin-top: 5em;
+	display: flex;
+	flex-direction: column;
 }
 p{
-    text-align: center;
+	text-align: center;
 }
 ';
 ?>
