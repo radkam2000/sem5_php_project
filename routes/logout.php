@@ -7,7 +7,7 @@ if (isset($_SESSION['username'])) {
 	header ('refresh: 5;URL='.$root.'/');
 } else {
 	http_response_code(307); // Temporary Redirect (Home page)
-    header('location: '.$root.'/');
+	header('location: '.$root.'/');
 	return;
 }
 

@@ -12,12 +12,12 @@ $active = function($path) {
 $paths = [
 	// '/' => 'Home',
 	// '/register' => 'Register',
-    // '/login'    => 'Log in',
-    // '/chat'     => 'Chat',
+	// '/login'	=> 'Log in',
+	// '/chat'	 => 'Chat',
 ];
 
 $loggedInPaths = [
-    '/chat'     => 'Chat',
+	'/chat'	 => 'Chat',
 	'/profile'	=> 'Profile',
 	'/logout' => 'Log out',
 ];
