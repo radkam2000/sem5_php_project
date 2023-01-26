@@ -1,7 +1,7 @@
 <?php
 if (!isset($_SESSION['username'])){
 	http_response_code(401); // Unauthorized access
-    header('location: '.$root.'/');
+	header('location: '.$root.'/');
 	return;
 }
 ?>

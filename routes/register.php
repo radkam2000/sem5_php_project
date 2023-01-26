@@ -96,7 +96,7 @@ form.register button:hover {
 	<p>Login</p>
 	<input type="text" name="username" placeholder="Login" minlength="1" maxlength="25" title="Login must be between 1 and 25 characters." required autofocus />
 	<p>Password</p>
-    <input type="password" name="password" placeholder="Password" minlength="8" title="Password must contain at least 8 characters." required />
+	<input type="password" name="password" placeholder="Password" minlength="8" title="Password must contain at least 8 characters." required />
 	<p>Repeat Password</p>
 	<input type="password" name="password2" placeholder="Repeat Password" minlength="8" title="Password must contain at least 8 characters." required />
 	<button>Register</button>

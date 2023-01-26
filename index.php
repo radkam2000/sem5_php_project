@@ -12,11 +12,11 @@ $site = [
 ];
 
 $routes = [
-	'/'         => 'index.php',
+	'/'		 => 'index.php',
 	'/register' => 'register.php',
 	'/logout'   => 'logout.php',
-    '/login'    => 'login.php',
-    '/chat'     => 'chat.php',
+	'/login'	=> 'login.php',
+	'/chat'	 => 'chat.php',
 	'/deleteAccount' => 'deleteAccount.php',
 	'/profile'	=>	'profile.php',
 ];

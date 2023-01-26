@@ -12,28 +12,28 @@ $data = filter_input_array(INPUT_POST, [
 ]);
 
 if ($data) {
-    try {
-        $success = $db->getPassword->execute([
-            'username' => $data['username'],
-        ]);
+	try {
+		$success = $db->getPassword->execute([
+			'username' => $data['username'],
+		]);
 
-        if (!$success) {
-            Error('Incorrect credentials!');
-        } else {
-            $password = $db->getPassword->fetch(PDO::FETCH_ASSOC)['password'];
-            
-            if (password_verify($data['password'], $password)) {
-                $_SESSION['username'] = $data['username'];
-                
-                http_response_code(307); // Temporary Redirect (Logged In)
-                header('location: '.$root.'/chat');    
-            } else {
-                Error('Incorrect credentials!');
-            }
-        }
-    } catch (Exception $e) { // Database Error
-        Error($e->getMessage());
-    }
+		if (!$success) {
+			Error('Incorrect credentials!');
+		} else {
+			$password = $db->getPassword->fetch(PDO::FETCH_ASSOC)['password'];
+			
+			if (password_verify($data['password'], $password)) {
+				$_SESSION['username'] = $data['username'];
+				
+				http_response_code(307); // Temporary Redirect (Logged In)
+				header('location: '.$root.'/chat');	
+			} else {
+				Error('Incorrect credentials!');
+			}
+		}
+	} catch (Exception $e) { // Database Error
+		Error($e->getMessage());
+	}
 }
 
 $site['style'][] = '
@@ -83,10 +83,10 @@ form.login button:hover {
 <h1 class="text-center">Log in</h1>
 <form class="login" method="POST">
 	<p>Login</p>
-    <input type="text" name="username" placeholder="Login" required />
+	<input type="text" name="username" placeholder="Login" required />
 	<p>Password</p>
-    <input type="password" name="password" placeholder="Password" required />
-    <button>Log in</button>
+	<input type="password" name="password" placeholder="Password" required />
+	<button>Log in</button>
 </form>
 		<p class="text-center">Need an account? <a href=<?=$root."/register";?>>Sign up</a></p>
 <?php
