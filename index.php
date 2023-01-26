@@ -12,13 +12,14 @@ $site = [
 ];
 
 $routes = [
-	'/'		 => 'index.php',
-	'/register' => 'register.php',
-	'/logout'   => 'logout.php',
+	'/'			=> 'index.php',
+	'/register'	=> 'register.php',
+	'/logout'	=> 'logout.php',
 	'/login'	=> 'login.php',
-	'/chat'	 => 'chat.php',
+	'/chat'		=> 'chat.php',
 	'/deleteAccount' => 'deleteAccount.php',
 	'/profile'	=>	'profile.php',
+	'/changePassword' => 'changePassword.php',
 ];
 
 // $root can be an empty string if the project is located at document root
@@ -33,7 +34,7 @@ $root = substr(
 
 // $route is relative to $root, always starts with /
 $route = substr(
-	$_SERVER['REQUEST_URI'],
+	strtok($_SERVER['REQUEST_URI'], '?'),
 	strlen($root),
 );
 
