@@ -2,9 +2,7 @@
 
 class DB {
 	private static $instance;
-	
 	public $pdo;
-
 	public $register;
 	public $getPassword;
 	public $sendMessage;
@@ -15,7 +13,7 @@ class DB {
 	public $historyAfter;
 	public $deleteAccount;
 	public $chatDeleteAccount;
-
+	public $changePassword;
 	private function __construct($config) {
 		try {
 			$this->pdo = new PDO(
@@ -40,14 +38,15 @@ class DB {
 		$this->markAsDeleted = $this->pdo->prepare('UPDATE chat SET delete_time = now(3) WHERE id = :id AND username = :username');
 		$this->edit = $this->pdo->prepare('UPDATE chat SET edit_time = now(3), message = :message WHERE id = :id AND username = :username');
 		$this->deleteAccount = $this->pdo->prepare('DELETE FROM users WHERE username = :username');
-		$this->chatDeleteAccount = $this->pdo->prepare('UPDATE chat SET username="Deleted" WHERE username = :username');
+		$this->chatDeleteAccount = $this->pdo->prepare('UPDATE chat SET username = "Deleted", edit_time = now(3) WHERE username = :username');
+		$this->changePassword = $this->pdo->prepare('UPDATE users SET password = :password WHERE username = :username');
 	}
 
 	public static function get() {
 		if (!isset(self::$instance)) {
 			self::$instance = new DB([
 				'host' => 'localhost',
-				'port' => 3306, // 3306,
+				'port' => 3306,
 				'dbname' => 'surname',
 				'username' => 'root',
 				'password' => '',

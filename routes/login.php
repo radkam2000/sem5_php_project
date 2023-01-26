@@ -1,10 +1,10 @@
 <?php
-if (isset($_SESSION['username'])) {
-	Error('You are already logged in. You will be redirected in 5 seconds');
-	http_response_code(307); // Temporary Redirect (Already logged in)
-	header ('refresh: 5;URL='.$root.'/chat');
-} else {
 
+if (isset($_SESSION['username'])) {
+	Error('You are already logged in.');
+	http_response_code(307); // Temporary Redirect (Already logged in)
+	header ('location: '.$root.'/chat');
+} else {
 
 $data = filter_input_array(INPUT_POST, [
 	'username' => [],
@@ -88,7 +88,7 @@ form.login button:hover {
 	<input type="password" name="password" placeholder="Password" required />
 	<button>Log in</button>
 </form>
-		<p class="text-center">Need an account? <a href=<?=$root."/register";?>>Sign up</a></p>
+		<p class="text-center">Need an account? <a href=<?=$root."/register"?>>Sign up</a></p>
 <?php
 } 
 ?>

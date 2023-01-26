@@ -1,7 +1,7 @@
 <?php
 if (!isset($_SESSION['username'])) {
 	http_response_code(401); // Unauthorized access
-	header('location: ' . $root . '/');
+	header('location: '.$root.'/');
 	return;
 }
 
@@ -117,7 +117,7 @@ main {
 			cursor: pointer;
 			border: 0;
 		}
-		:host([data-me]) .action-buttons > button > svg{	
+		:host([data-me]) .action-buttons > button > svg {	
 			height: 1em;
 			padding-left: 0.5em;
 			padding-right: 0.5em;
@@ -294,9 +294,11 @@ main {
 				messages.querySelector(`[id="${message.id}"]`)?.remove();
 			} else if (message.edit_time) {
 				const existingMessage = messages.querySelector(`[id="${message.id}"] > span[slot="content"]`);
+				const existingUsername = messages.querySelector(`[id="${message.id}"] > span[slot="username"]`);
 
 				if (existingMessage) {
 					existingMessage.innerText = message.message;
+					existingUsername.innerText = message.username;
 				} else {
 					createMessage();
 				}

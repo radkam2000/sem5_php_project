@@ -1,9 +1,9 @@
 <?php
 
 if (isset($_SESSION['username'])) {
-	Error('You are already logged in. You will be redirected in a few seconds');
+	Error('You are already logged in. ');
 	http_response_code(307); // Temporary Redirect (Already logged in)
-	header ('refresh: 5;URL='.$root.'/chat');
+	header ('location: '.$root.'/chat');
 } else {
 
 $data = filter_input_array(INPUT_POST, [
@@ -34,11 +34,11 @@ if ($data) {
 				$_SESSION['username'] = $data['username'];
 				Success("Your account was succesfully created. You will be redirected in a few seconds");
 				http_response_code(307); // Temporary Redirect (Logged In)
-				header ('refresh: 5;URL='.$root.'/chat');
 				header('location: '.$root.'/chat');
 			}
 		} catch (Exception $e) { // Database Error
 			if($e->getCode()==='23000'){
+					var_dump($e);
 				Error("This account already exists.");
 			} else {
 					Error($e->getMessage());
@@ -102,5 +102,5 @@ form.register button:hover {
 	<button>Register</button>
 	<!-- <button type="button" onclick="document.forms[0].submit()">Register without client validation</button> -->
 </form>
-<p class="text-center">Already have an account? <a href=<?=$root."/login";?>>Log in</a></p>
+<p class="text-center">Already have an account? <a href=<?=$root."/login"?>>Log in</a></p>
 <?php } ?>

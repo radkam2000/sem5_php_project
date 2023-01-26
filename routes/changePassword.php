@@ -3,10 +3,11 @@
 if (!isset($_SESSION['username'])){
 	http_response_code(401); // Unauthorized access
 	header('location: '.$root.'/');
-	return;
+    return;
 }
 
 $data = filter_input_array(INPUT_POST, [
+    'new_password' => [],
 	'password' => [],
 	'password2' => [],
 ]);
@@ -26,12 +27,10 @@ if ($data) {
 				$password = $db->getPassword->fetch(PDO::FETCH_ASSOC)['password'];
 				
 				if (password_verify($data['password'], $password)) {
-					$db->deleteAccount->execute(['username' => $_SESSION['username']]);
-					$db->chatDeleteAccount->execute(['username' => $_SESSION['username']]);
-					$_SESSION = [];
-					// $_SESSION['username'] = $data['username'];
-					// http_response_code(307); // Temporary Redirect (Account deleted)
-					// header('location: '.$root.'/');	
+                    $db->changePassword->execute([
+                        'password' => password_hash($data['new_password'], PASSWORD_DEFAULT),
+                        'username' => $_SESSION['username'],
+                    ]);
 				} else {
 					Error('Incorrect password!');
 				}
@@ -39,11 +38,8 @@ if ($data) {
 		} catch (Exception $e) { // Database Error
 			Error($e->getMessage());
 		} finally{
-			$_SESSION = [];
-			// $_SESSION['username'] = $data['username'];
-			Success("Your account was succesfully deleted.");
-			http_response_code(307); // Temporary Redirect (Account deleted)
-			header ('location: '.$root.'/?delete=1');
+			http_response_code(307); // Temporary Redirect (Password changed)
+			header ('location: '.$root.'/profile?passwordChanged=1');
 		}
 	}
 }
@@ -92,11 +88,14 @@ form.deleteAccount button:hover {
 
 ';
 ?>
-<h1 class="text-center">Verify your password to delete your account</h1>
+<h1 class="text-center">Change your password</h1>
 <form class="deleteAccount" method="POST">
-	<p>Password</p>
+
+    <p>New Password</p>
+	<input type="password" name="new_password" placeholder="Password" required />
+	<p>Current Password</p>
 	<input type="password" name="password" placeholder="Password" required />
-	<p>Repeat Password</p>
+	<p>Repeat Current Password</p>
 	<input type="password" name="password2" placeholder="Password" required />
 	<button>Confirm</button>
 </form>
