@@ -1,6 +1,8 @@
 <?php
 if (isset($_SESSION['username'])) {
-	Error('You are already logged in.');
+	Error('You are already logged in. You will be redirected in 5 seconds');
+	http_response_code(307); // Temporary Redirect (Already logged in)
+	header ('refresh: 5;URL='.$root.'/chat');
 } else {
 
 
